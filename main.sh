@@ -3,7 +3,7 @@
 # 全局变量
 WORK_DIR="/tmp/.besttrace/" # 工作目录
 SHELL_VERSION="0.0.1" # shell 脚本
-IS_DEBUG=0 # 是否开启 DEBUG
+IS_DEBUG=0 # 是否开启 DEBUG（0-关闭，1-开启）
 
 # 字体颜色
 FONT_BLACK="\033[30m"
@@ -120,7 +120,7 @@ next() {
 }
 
 clear_besttrace() {
-  [[ -n $IS_DEBUG ]] && rm -rf ./main.sh || ""
+  [[ ! -n $IS_DEBUG ]] && rm -rf ./main.sh || ""
   rm -rf ./besttrace.zip
   rm -rf $WORK_DIR
 }
