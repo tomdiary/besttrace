@@ -120,7 +120,7 @@ next() {
 }
 
 clear_besttrace() {
-  [[ ! -n $IS_DEBUG ]] && rm -rf ./main.sh || ""
+  [ $IS_DEBUG != 1 ] && rm -rf ./main.sh
   rm -rf ./besttrace.zip
   rm -rf $WORK_DIR
 }
