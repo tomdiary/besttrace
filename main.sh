@@ -64,6 +64,17 @@ declare -A ip_address_cn=(
 )
 
 basic_init() {
+  if [ -n $1 ]; then
+    lang=$1
+  else
+    lang="en"
+  fi
+  
+  if [ ! -d $WORK_DIR ]; then
+    mkdir $WORK_DIR
+    rm -f "${WORK_DIR}"*
+  fi
+
   if [ -f /etc/redhat-release ]; then
     release="centos"
 	elif cat /etc/issue | grep -Eqi "debian"; then
@@ -81,8 +92,8 @@ basic_init() {
 	fi
 
   # install wget
-	if  [ ! -e '/usr/bin/wget' ]; then
-    echo "${MSG_INFO}Installing Wget ..."
+	if [ ! -e '/usr/bin/wget' ]; then
+    echo -e "${MSG_INFO}Installing Wget ..."
     if [ "${release}" == "centos" ]; then
       yum -y install wget > /dev/null 2>&1
     else
@@ -91,9 +102,8 @@ basic_init() {
 		echo -ne "\e[1A"; echo -ne "\e[0K\r"
 	fi
 
-  # install unzip
-	if  [ ! -e '/usr/bin/unzip' ]; then
-    echo "${MSG_INFO}Installing Unzip ..."
+  if [ ! -e '/usr/bin/unzip' ]; then
+    echo -e "${MSG_INFO}Installing Unzip ..."
     if [ "${release}" == "centos" ]; then
       yum -y install unzip > /dev/null 2>&1
     else
@@ -108,8 +118,11 @@ basic_init() {
 
   # install besttrace
   if [ ! -f "${WORK_DIR}besttrace" ]; then
-    echo "${MSG_INFO}Installing Besttrace ..."
+    echo -e "${MSG_INFO}Installing Besttrace ..."
+    # https://raw.githubusercontent.com/tomdiary/besttrace/main/besttrace4linux.zip
+    # https://cdn.ipip.net/17mon/besttrace4linux.zip
     wget --no-check-certificate -O "besttrace.zip" https://cdn.ipip.net/17mon/besttrace4linux.zip
+    # wget --no-check-certificate -O "besttrace.zip" https://raw.githubusercontent.com/tomdiary/besttrace/main/besttrace4linux.zip
     unzip "besttrace.zip" -d "${WORK_DIR}"
     chmod +x "${WORK_DIR}besttrace"
   fi
@@ -132,8 +145,8 @@ main() {
   next
 
   for key in "${!ip_address_cn[@]}"; do
-    echo "${ip_address_cn[$key]}"
-    "${WORK_DIR}besttrace" -g cn -q 1 ${ip_address[$key]}
+    echo -e "${ip_address_cn[$key]}"
+    "${WORK_DIR}besttrace" -g ${lang} -q 1 ${ip_address[$key]}
     next
   done
 
