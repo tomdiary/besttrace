@@ -42,12 +42,12 @@ declare -A ip_address_en=(
   ['1']="Beijing Unicom"
   ['2']="Beijing Mobile"
   ['3']="Shanghai Telecom"
-  ['3']="Shanghai Unicom"
-  ['3']="Shanghai Mobile"
-  ['3']="Guangzhou Telecom"
-  ['3']="Guangzhou Unicom"
-  ['3']="Guangzhou Mobile"
-  ['3']="Chengdu Educate"
+  ['4']="Shanghai Unicom"
+  ['5']="Shanghai Mobile"
+  ['6']="Guangzhou Telecom"
+  ['7']="Guangzhou Unicom"
+  ['8']="Guangzhou Mobile"
+  ['9']="Chengdu Educate"
 )
 
 declare -A ip_address_cn=(
