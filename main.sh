@@ -1,14 +1,8 @@
 #!/usr/bin/env bash
 # @author TomDiary
-# @lastTime 2023-09-27 21:39
+# @lastTime 2026-03-10
 # @version 0.1.0
-
-# 全局变量
-WORK_DIR="/tmp/.besttrace/" # 工作目录
-SHELL_VERSION="0.1.0" # shell 脚本
-IS_DEBUG=0 # 是否开启 DEBUG（0-关闭，1-开启）
-ADDRESS_LIST=""
-BESTTRACE_SITE=""
+# 使用 nexttrace 回程脚本（从指定节点 trace 回本机）
 
 # 字体颜色
 FONT_BLACK="\033[30m"
@@ -21,6 +15,11 @@ FONT_SKYBLUE="\033[36m"
 FONT_WHITE="\033[37m"
 FONT_SUFFIX="\033[0m"
 
+# 背景色（用于节点标题）
+BG_BLUE="\033[44m"
+BG_CYAN="\033[46m"
+NODE_TITLE="${BG_BLUE}${FONT_WHITE}"
+
 # 输出语句颜色
 MSG_INFO="${FONT_BLUE} [Info] ${FONT_SUFFIX}"
 MSG_WARNING="${FONT_YELLOW} [Warning] ${FONT_SUFFIX}"
@@ -29,175 +28,160 @@ MSG_ERROR="${FONT_RED} [Error] ${FONT_SUFFIX}"
 MSG_SUCCESS="${FONT_GREEN} [Success] ${FONT_SUFFIX}"
 MSG_FAIL="${FONT_SKYBLUE} [Failed] ${FONT_SUFFIX}"
 
-keys_order=(0 1 2 3 4 5 6 7 8 9)
+set -e
 
-declare -A ip_address=(
-  ['0']="219.141.136.12"
-  ['1']="202.106.50.1"
-  ['2']="221.179.155.161"
-  ['3']="202.96.209.133"
-  ['4']="210.22.97.1"
-  ['5']="211.136.112.200"
-  ['6']="58.60.188.222"
-  ['7']="210.21.196.6"
-  ['8']="120.196.165.24"
-  ['9']="202.112.14.151"
+# 回程IP：4-IPv4，6-IPv6，默认IPv4
+TRACE_IPVER=4
+# 回程语言：cn-中文，en-英文，默认中文
+TRACE_LANG=cn
+# IPv4 回程节点列表
+NODES_IPV4=(
+  "北京电信|163 AS4134|ipv4.pek-4134.endpoint.nxtrace.org"
+  "上海电信|163 AS4134|ipv4.sha-4134.endpoint.nxtrace.org"
+  # "上海电信|CN2 AS4809|ipv4.sha-4809.endpoint.nxtrace.org"
+  # "杭州电信|163 AS4134|ipv4.hgh-4134.endpoint.nxtrace.org"
+  "广州电信|163 AS4134|ipv4.can-4134.endpoint.nxtrace.org"
+  "北京联通|169 AS4837|ipv4.pek-4837.endpoint.nxtrace.org"
+  # "北京联通|A网 AS9929|ipv4.pek-9929.endpoint.nxtrace.org"
+  "上海联通|169 AS4837|ipv4.sha-4837.endpoint.nxtrace.org"
+  # "杭州联通|169 AS4837|ipv4.hgh-4837.endpoint.nxtrace.org"
+  "广州联通|169 AS4837|ipv4.can-4837.endpoint.nxtrace.org"
+  "北京移动|骨干网 AS9808|ipv4.pek-9808.endpoint.nxtrace.org"
+  # "北京移动|CMIN2 AS58807|ipv4.pek-58807.endpoint.nxtrace.org"
+  "上海移动|骨干网 AS9808|ipv4.sha-9808.endpoint.nxtrace.org"
+  # "上海移动|CMIN2 AS58807|ipv4.sha-58807.endpoint.nxtrace.org"
+  # "杭州移动|骨干网 AS9808|ipv4.hgh-9808.endpoint.nxtrace.org"
+  "广州移动|骨干网 AS9808|ipv4.can-9808.endpoint.nxtrace.org"
+  "北京教育网|CERNET AS4538|ipv4.pek-4538.endpoint.nxtrace.org"
+  "上海教育网|CERNET AS4538|ipv4.sha-4538.endpoint.nxtrace.org"
+  "杭州教育网|CERNET AS4538|ipv4.hgh-4538.endpoint.nxtrace.org"
+  "合肥科技网|AS7497|ipv4.hfe-7497.endpoint.nxtrace.org"
+)
+# IPv6 回程节点列表
+NODES_IPV6=(
+  "北京电信|163 AS4134|ipv6.pek-4134.endpoint.nxtrace.org"
+  "上海电信|163 AS4134|ipv6.sha-4134.endpoint.nxtrace.org"
+  # "上海电信|CN2 AS4809|ipv6.sha-4809.endpoint.nxtrace.org"
+  # "杭州电信|163 AS4134|ipv6.hgh-4134.endpoint.nxtrace.org"
+  "广州电信|163 AS4134|ipv6.can-4134.endpoint.nxtrace.org"
+  "北京联通|169 AS4837|ipv6.pek-4837.endpoint.nxtrace.org"
+  # "北京联通|A网 AS9929|ipv6.pek-9929.endpoint.nxtrace.org"
+  "上海联通|169 AS4837|ipv6.sha-4837.endpoint.nxtrace.org"
+  # "杭州联通|169 AS4837|ipv6.hgh-4837.endpoint.nxtrace.org"
+  "广州联通|169 AS4837|ipv6.can-4837.endpoint.nxtrace.org"
+  "北京移动|骨干网 AS9808|ipv6.pek-9808.endpoint.nxtrace.org"
+  # "北京移动|CMIN2 AS58807|ipv6.pek-58807.endpoint.nxtrace.org"
+  "上海移动|骨干网 AS9808|ipv6.sha-9808.endpoint.nxtrace.org"
+  # "上海移动|CMIN2 AS58807|ipv6.sha-58807.endpoint.nxtrace.org"
+  # "杭州移动|骨干网 AS9808|ipv6.hgh-9808.endpoint.nxtrace.org"
+  "广州移动|骨干网 AS9808|ipv6.can-9808.endpoint.nxtrace.org"
+  "北京教育网|CERNET AS4538|ipv6.pek-4538.endpoint.nxtrace.org"
+  "上海教育网|CERNET AS4538|ipv6.sha-4538.endpoint.nxtrace.org"
+  "杭州教育网|CERNET AS4538|ipv6.hgh-4538.endpoint.nxtrace.org"
+  "合肥科技网|AS7497|ipv6.hfe-7497.endpoint.nxtrace.org"
 )
 
-declare -A ip_address_en=(
-  ['0']="Beijing Telecom"
-  ['1']="Beijing Unicom"
-  ['2']="Beijing Mobile"
-  ['3']="Shanghai Telecom"
-  ['4']="Shanghai Unicom"
-  ['5']="Shanghai Mobile"
-  ['6']="Guangzhou Telecom"
-  ['7']="Guangzhou Unicom"
-  ['8']="Guangzhou Mobile"
-  ['9']="Chengdu Educate"
-)
-
-declare -A ip_address_cn=(
-  ['0']="北京电信"
-  ['1']="北京联通"
-  ['2']="北京移动"
-  ['3']="上海电信"
-  ['4']="上海联通"
-  ['5']="上海移动"
-  ['6']="广州电信"
-  ['7']="广州联通"
-  ['8']="广州移动"
-  ['9']="成都教育网"
-)
-
-basic_init() {
-  if [ -z "$BESTTRACE_LANG" ] || [ "$BESTTRACE_LANG" != "cn" ]; then
-    BESTTRACE_LANG="en"
-    ADDRESS_LIST="ip_address_en"
+# 检查并安装 nexttrace
+check_nexttrace() {
+  if command -v nexttrace &>/dev/null; then
+    return 0
+  fi
+  if [ "$TRACE_LANG" = "en" ]; then
+    echo "[Info] nexttrace not found, attempting install..."
   else
-    ADDRESS_LIST="ip_address_cn"
+    echo "[Info] nexttrace 未找到，尝试安装..."
   fi
-
-  if [ -z "$BESTTRACE_SOURCE" ] || [ "$BESTTRACE_SOURCE" != "ipip" ]; then
-    BESTTRACE_SOURCE="github"
-    BESTTRACE_SITE="https://raw.githubusercontent.com/tomdiary/besttrace/main/besttrace4linux.zip"
+  if command -v curl &>/dev/null; then
+    curl -sL https://nxtrace.org/nt | bash
   else
-    BESTTRACE_SITE="https://cdn.ipip.net/17mon/besttrace4linux.zip"
-  fi
-
-  if [ -z "$BESTTRACE_QUERIES" ]; then
-    BESTTRACE_QUERIES=1
-  fi
-  
-  if [ ! -d $WORK_DIR ]; then
-    mkdir $WORK_DIR
-    rm -f "${WORK_DIR}"*
-  fi
-
-  if [ -f /etc/redhat-release ]; then
-    release="centos"
-	elif cat /etc/issue | grep -Eqi "debian"; then
-    release="debian"
-	elif cat /etc/issue | grep -Eqi "ubuntu"; then
-    release="ubuntu"
-	elif cat /etc/issue | grep -Eqi "centos|red hat|redhat"; then
-    release="centos"
-	elif cat /proc/version | grep -Eqi "debian"; then
-    release="debian"
-	elif cat /proc/version | grep -Eqi "ubuntu"; then
-    release="ubuntu"
-	elif cat /proc/version | grep -Eqi "centos|red hat|redhat"; then
-    release="centos"
-	fi
-
-  # install wget
-	if [ ! -e '/usr/bin/wget' ]; then
-    echo -e "${MSG_INFO}Installing Wget ..."
-    if [ "${release}" == "centos" ]; then
-      yum -y install wget > /dev/null 2>&1
-    else
-      apt-get -y install wget > /dev/null 2>&1
-    fi
-		echo -ne "\e[1A"; echo -ne "\e[0K\r"
-	fi
-
-  if [ ! -e '/usr/bin/unzip' ]; then
-    echo -e "${MSG_INFO}Installing Unzip ..."
-    if [ "${release}" == "centos" ]; then
-      yum -y install unzip > /dev/null 2>&1
-    else
-      apt-get -y install unzip > /dev/null 2>&1
-    fi
-		echo -ne "\e[1A"; echo -ne "\e[0K\r"
-	fi
-
-  if [ ! -d $WORK_DIR ]; then
-    mkdir $WORK_DIR
-  fi
-
-  # install besttrace
-  if [ ! -f "${WORK_DIR}besttrace" ]; then
-    echo -e "${MSG_INFO}Installing Besttrace ..."
-    # https://raw.githubusercontent.com/tomdiary/besttrace/main/besttrace4linux.zip
-    # https://cdn.ipip.net/17mon/besttrace4linux.zip
-    wget --no-check-certificate -O "besttrace.zip" "$BESTTRACE_SITE"
-    unzip "besttrace.zip" -d "${WORK_DIR}"
-    chmod +x "${WORK_DIR}besttrace"
+    [ "$TRACE_LANG" = "en" ] && echo "[Error] curl required. Install nexttrace: https://nxtrace.org" || echo "[Error] 需要 curl。请先安装 nexttrace: https://nxtrace.org"
+    exit 1
   fi
 }
 
-next() {
-  printf "%-70s\n" "-" | sed 's/\s/-/g'
+# 打印分隔线
+sep() {
+  printf '%.0s-' {1..70}
+  echo
 }
 
-clear_besttrace() {
-  [ $IS_DEBUG != 1 ] && rm -rf ./main.sh
-  rm -rf ./besttrace.zip
-  rm -rf $WORK_DIR
+print_center() {
+  local text="$1"
+  local width="$2"
+  local len=${#text}
+  local pad=0
+  if [ "$len" -lt "$width" ]; then
+    pad=$(( (width - len) / 2 ))
+  fi
+  printf "%*s%s\n" "$pad" "" "$text"
 }
 
-get_address_value() {
-  local index=$1
-  eval "echo \${${ADDRESS_LIST}[$index]}"
-}
-
-about() {
-	echo ""
-	echo " ========================================================= "
-	echo " \    Besttrace https://github.com/tomdiary/besttrace    / "
-	echo " \                 Lang, Souce, Queries                  / "
-	echo " \                  v0.1.0  2023-08-27                   / "
-	echo " \                   Author: TomDiary                    / "
-	echo " ========================================================= "
-	echo ""
+# 打印帮助信息
+usage() {
+  echo "Usage: $0 [-4] [-6] [-l cn|en]"
+  echo "  -4          IPv4 only (default)"
+  echo "  -6          IPv6 only"
+  echo "  -l cn|en    Language: cn=中文, en=English (default: cn)"
+  echo ""
+  echo "Example: $0 -6 -l en"
 }
 
 main() {
-  basic_init
-  clear
-  about
-  next
+  if [ "$TRACE_IPVER" = "6" ]; then
+    NODES=("${NODES_IPV6[@]}")
+    NT_IP_FLAG="--ipv6"
+  else
+    NODES=("${NODES_IPV4[@]}")
+    NT_IP_FLAG="--ipv4"
+  fi
 
-  for key in "${keys_order[@]}"; do
-    echo -e "$(get_address_value $key)"
-    "${WORK_DIR}besttrace" -g ${BESTTRACE_LANG} -q ${BESTTRACE_QUERIES} ${ip_address["$key"]}
-    next
+  check_nexttrace
+  echo ""
+
+  if [ "$TRACE_LANG" = "en" ]; then
+    echo "========================================================================="
+    print_center "NextTrace Return Route Test - nxtrace.org" 73
+    print_center "IPv${TRACE_IPVER} | Lang: ${TRACE_LANG}" 73
+    print_center "v0.1.0  2026-03-10" 73
+    print_center "Author: TomDiary" 73
+    print_center "https://github.com/tomdiary/besttrace" 73
+    echo "========================================================================="
+  else
+    echo "========================================================================="
+    print_center "NextTrace 回程测试 (Return Route) - nxtrace.org" 73
+    print_center "IPv${TRACE_IPVER} | 语言: ${TRACE_LANG}" 73
+    print_center "v0.1.0  2026-03-10" 73
+    print_center "Author: TomDiary" 73
+    print_center "https://github.com/tomdiary/besttrace" 73
+    echo "========================================================================="
+  fi
+  echo ""
+
+  for node in "${NODES[@]}"; do
+    IFS='|' read -ra parts <<< "$node"
+    name="${parts[0]}"
+    carrier="${parts[1]}"
+    host="${parts[2]}"
+    echo "========================================================================="
+    echo -e "${NODE_TITLE} $name ${FONT_SUFFIX}"
+    nexttrace $NT_IP_FLAG -g "$TRACE_LANG" -M "$host"
   done
-
-  clear_besttrace
+  echo "========================================================================="
 }
 
-while getopts l:b:q: option
-do 
-  case $option in
+while getopts "46hl:" opt; do
+  case $opt in
+    4) TRACE_IPVER=4 ;;
+    6) TRACE_IPVER=6 ;;
     l)
-      BESTTRACE_LANG=${OPTARG};;
-    b)
-      BESTTRACE_SOURCE=${OPTARG};;
-    q)
-      BESTTRACE_QUERIES=${OPTARG};;
+      case "${OPTARG}" in
+        cn|en) TRACE_LANG="${OPTARG}" ;;
+        *) echo "Invalid -l option: ${OPTARG}. Use cn or en."; usage; exit 1 ;;
+      esac
+      ;;
+    h) usage; exit 0 ;;
+    *) usage; exit 1 ;;
   esac
 done
 
 main
-
