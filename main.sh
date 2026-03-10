@@ -34,52 +34,8 @@ set -e
 TRACE_IPVER=4
 # 回程语言：cn-中文，en-英文，默认中文
 TRACE_LANG=cn
-# IPv4 回程节点列表
-NODES_IPV4=(
-  "北京电信|163 AS4134|ipv4.pek-4134.endpoint.nxtrace.org"
-  "上海电信|163 AS4134|ipv4.sha-4134.endpoint.nxtrace.org"
-  # "上海电信|CN2 AS4809|ipv4.sha-4809.endpoint.nxtrace.org"
-  # "杭州电信|163 AS4134|ipv4.hgh-4134.endpoint.nxtrace.org"
-  "广州电信|163 AS4134|ipv4.can-4134.endpoint.nxtrace.org"
-  "北京联通|169 AS4837|ipv4.pek-4837.endpoint.nxtrace.org"
-  # "北京联通|A网 AS9929|ipv4.pek-9929.endpoint.nxtrace.org"
-  "上海联通|169 AS4837|ipv4.sha-4837.endpoint.nxtrace.org"
-  # "杭州联通|169 AS4837|ipv4.hgh-4837.endpoint.nxtrace.org"
-  "广州联通|169 AS4837|ipv4.can-4837.endpoint.nxtrace.org"
-  "北京移动|骨干网 AS9808|ipv4.pek-9808.endpoint.nxtrace.org"
-  # "北京移动|CMIN2 AS58807|ipv4.pek-58807.endpoint.nxtrace.org"
-  "上海移动|骨干网 AS9808|ipv4.sha-9808.endpoint.nxtrace.org"
-  # "上海移动|CMIN2 AS58807|ipv4.sha-58807.endpoint.nxtrace.org"
-  # "杭州移动|骨干网 AS9808|ipv4.hgh-9808.endpoint.nxtrace.org"
-  "广州移动|骨干网 AS9808|ipv4.can-9808.endpoint.nxtrace.org"
-  "北京教育网|CERNET AS4538|ipv4.pek-4538.endpoint.nxtrace.org"
-  "上海教育网|CERNET AS4538|ipv4.sha-4538.endpoint.nxtrace.org"
-  "杭州教育网|CERNET AS4538|ipv4.hgh-4538.endpoint.nxtrace.org"
-  "合肥科技网|AS7497|ipv4.hfe-7497.endpoint.nxtrace.org"
-)
-# IPv6 回程节点列表
-NODES_IPV6=(
-  "北京电信|163 AS4134|ipv6.pek-4134.endpoint.nxtrace.org"
-  "上海电信|163 AS4134|ipv6.sha-4134.endpoint.nxtrace.org"
-  # "上海电信|CN2 AS4809|ipv6.sha-4809.endpoint.nxtrace.org"
-  # "杭州电信|163 AS4134|ipv6.hgh-4134.endpoint.nxtrace.org"
-  "广州电信|163 AS4134|ipv6.can-4134.endpoint.nxtrace.org"
-  "北京联通|169 AS4837|ipv6.pek-4837.endpoint.nxtrace.org"
-  # "北京联通|A网 AS9929|ipv6.pek-9929.endpoint.nxtrace.org"
-  "上海联通|169 AS4837|ipv6.sha-4837.endpoint.nxtrace.org"
-  # "杭州联通|169 AS4837|ipv6.hgh-4837.endpoint.nxtrace.org"
-  "广州联通|169 AS4837|ipv6.can-4837.endpoint.nxtrace.org"
-  "北京移动|骨干网 AS9808|ipv6.pek-9808.endpoint.nxtrace.org"
-  # "北京移动|CMIN2 AS58807|ipv6.pek-58807.endpoint.nxtrace.org"
-  "上海移动|骨干网 AS9808|ipv6.sha-9808.endpoint.nxtrace.org"
-  # "上海移动|CMIN2 AS58807|ipv6.sha-58807.endpoint.nxtrace.org"
-  # "杭州移动|骨干网 AS9808|ipv6.hgh-9808.endpoint.nxtrace.org"
-  "广州移动|骨干网 AS9808|ipv6.can-9808.endpoint.nxtrace.org"
-  "北京教育网|CERNET AS4538|ipv6.pek-4538.endpoint.nxtrace.org"
-  "上海教育网|CERNET AS4538|ipv6.sha-4538.endpoint.nxtrace.org"
-  "杭州教育网|CERNET AS4538|ipv6.hgh-4538.endpoint.nxtrace.org"
-  "合肥科技网|AS7497|ipv6.hfe-7497.endpoint.nxtrace.org"
-)
+NODES_URL="https://raw.githubusercontent.com/tomdiary/besttrace/main/nodes.json"
+NODES_FILE_LOCAL="$(dirname "$0")/nodes.json"
 
 # 检查并安装 nexttrace
 check_nexttrace() {
@@ -87,14 +43,51 @@ check_nexttrace() {
     return 0
   fi
   if [ "$TRACE_LANG" = "en" ]; then
-    echo "[Info] nexttrace not found, attempting install..."
+    echo "[Info] nexttrace not found, attempting install..." >&2
   else
-    echo "[Info] nexttrace 未找到，尝试安装..."
+    echo "[Info] nexttrace 未找到，尝试安装..." >&2
   fi
   if command -v curl &>/dev/null; then
     curl -sL https://nxtrace.org/nt | bash
   else
-    [ "$TRACE_LANG" = "en" ] && echo "[Error] curl required. Install nexttrace: https://nxtrace.org" || echo "[Error] 需要 curl。请先安装 nexttrace: https://nxtrace.org"
+    [ "$TRACE_LANG" = "en" ] && echo "[Error] curl required. Install nexttrace: https://nxtrace.org" >&2 || echo "[Error] 需要 curl。请先安装 nexttrace: https://nxtrace.org" >&2
+    exit 1
+  fi
+}
+
+install_jq() {
+  if command -v jq &>/dev/null; then
+    return 0
+  fi
+
+  if [ "$TRACE_LANG" = "en" ]; then
+    echo "[Info] jq not found, attempting install..." >&2
+  else
+    echo "[Info] jq 未找到，尝试自动安装..." >&2
+  fi
+
+  if command -v apt &>/dev/null; then
+    apt update -y >/dev/null 2>&1 && apt install -y jq >/dev/null 2>&1 || true
+  elif command -v apt-get &>/dev/null; then
+    apt-get update -y >/dev/null 2>&1 && apt-get install -y jq >/dev/null 2>&1 || true
+  elif command -v dnf &>/dev/null; then
+    dnf install -y jq >/dev/null 2>&1 || true
+  elif command -v yum &>/dev/null; then
+    yum install -y jq >/dev/null 2>&1 || true
+  elif command -v apk &>/dev/null; then
+    apk add --no-cache jq >/dev/null 2>&1 || true
+  elif command -v pacman &>/dev/null; then
+    pacman -Sy --noconfirm jq >/dev/null 2>&1 || true
+  elif command -v brew &>/dev/null; then
+    brew install jq >/dev/null 2>&1 || true
+  fi
+
+  if ! command -v jq &>/dev/null; then
+    if [ "$TRACE_LANG" = "en" ]; then
+      echo "[Error] Failed to install jq automatically. Please install jq manually." >&2
+    else
+      echo "[Error] jq 自动安装失败，请手动安装 jq 后重试。" >&2
+    fi
     exit 1
   fi
 }
@@ -126,12 +119,45 @@ usage() {
   echo "Example: $0 -6 -l en"
 }
 
+load_nodes_from_json() {
+  local json_path="$NODES_FILE_LOCAL"
+  if command -v curl &>/dev/null; then
+    local tmp_file="${NODES_FILE_LOCAL}.tmp"
+    if curl -fsSL "$NODES_URL" -o "$tmp_file"; then
+      mv "$tmp_file" "$NODES_FILE_LOCAL"
+    else
+      rm -f "$tmp_file"
+    fi
+  fi
+
+  if [ ! -f "$json_path" ]; then
+    echo "[Error] nodes file not found (remote/local): $NODES_URL / $NODES_FILE_LOCAL" >&2
+    exit 1
+  fi
+
+  install_jq
+
+  local key name_key
+  if [ "$TRACE_IPVER" = "6" ]; then
+    key="nodes_v6"
+  else
+    key="nodes_v4"
+  fi
+  if [ "$TRACE_LANG" = "en" ]; then
+    name_key="name_en"
+  else
+    name_key="name_cn"
+  fi
+
+  jq -r --arg key "$key" --arg name_key "$name_key" \
+    '.[$key][] | select(.host != null and .host != "") | "\(.[$name_key] // "")|\(.asn // "")|\(.host)"' \
+    "$json_path"
+}
+
 main() {
   if [ "$TRACE_IPVER" = "6" ]; then
-    NODES=("${NODES_IPV6[@]}")
     NT_IP_FLAG="--ipv6"
   else
-    NODES=("${NODES_IPV4[@]}")
     NT_IP_FLAG="--ipv4"
   fi
 
@@ -157,13 +183,15 @@ main() {
   fi
   echo ""
 
+  mapfile -t NODES < <(load_nodes_from_json)
+
   for node in "${NODES[@]}"; do
     IFS='|' read -ra parts <<< "$node"
     name="${parts[0]}"
-    carrier="${parts[1]}"
+    asn="${parts[1]}"
     host="${parts[2]}"
     echo "========================================================================="
-    echo -e "${NODE_TITLE} $name ${FONT_SUFFIX}"
+    echo -e "${NODE_TITLE} $name（$asn） ${FONT_SUFFIX}"
     nexttrace $NT_IP_FLAG -g "$TRACE_LANG" -M "$host"
   done
   echo "========================================================================="
