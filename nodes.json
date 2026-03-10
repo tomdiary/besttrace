@@ -1,0 +1,162 @@
+{
+  "nodes_v4": [
+    {
+      "name_cn": "北京电信",
+      "name_en": "Beijing Telecom",
+      "asn": "AS4134",
+      "host": "ipv4.pek-4134.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "上海电信",
+      "name_en": "Shanghai Telecom",
+      "asn": "AS4134",
+      "host": "ipv4.sha-4134.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "广州电信",
+      "name_en": "Guangzhou Telecom",
+      "asn": "AS4134",
+      "host": "ipv4.can-4134.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "北京联通",
+      "name_en": "Beijing Unicom",
+      "asn": "AS4837",
+      "host": "ipv4.pek-4837.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "上海联通",
+      "name_en": "Shanghai Unicom",
+      "asn": "AS4837",
+      "host": "ipv4.sha-4837.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "广州联通",
+      "name_en": "Guangzhou Unicom",
+      "asn": "AS4837",
+      "host": "ipv4.can-4837.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "北京移动",
+      "name_en": "Beijing Mobile",
+      "asn": "AS9808",
+      "host": "ipv4.pek-9808.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "上海移动",
+      "name_en": "Shanghai Mobile",
+      "asn": "AS9808",
+      "host": "ipv4.sha-9808.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "广州移动",
+      "name_en": "Guangzhou Mobile",
+      "asn": "AS9808",
+      "host": "ipv4.can-9808.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "北京教育网",
+      "name_en": "Beijing Education",
+      "asn": "AS4538",
+      "host": "ipv4.pek-4538.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "上海教育网",
+      "name_en": "Shanghai Education",
+      "asn": "AS4538",
+      "host": "ipv4.sha-4538.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "杭州教育网",
+      "name_en": "Hangzhou Education",
+      "asn": "AS4538",
+      "host": "ipv4.hgh-4538.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "合肥科技网",
+      "name_en": "Hefei Science and Technology",
+      "asn": "AS7497",
+      "host": "ipv4.hfe-7497.endpoint.nxtrace.org"
+    }
+  ],
+  "nodes_v6": [
+    {
+      "name_cn": "北京电信",
+      "name_en": "Beijing Telecom",
+      "asn": "AS4134",
+      "host": "ipv6.pek-4134.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "上海电信",
+      "name_en": "Shanghai Telecom",
+      "asn": "AS4134",
+      "host": "ipv6.sha-4134.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "广州电信",
+      "name_en": "Guangzhou Telecom",
+      "asn": "AS4134",
+      "host": "ipv6.can-4134.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "北京联通",
+      "name_en": "Beijing Unicom",
+      "asn": "AS4837",
+      "host": "ipv6.pek-4837.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "上海联通",
+      "name_en": "Shanghai Unicom",
+      "asn": "AS4837",
+      "host": "ipv6.sha-4837.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "广州联通",
+      "name_en": "Guangzhou Unicom",
+      "asn": "AS4837",
+      "host": "ipv6.can-4837.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "北京移动",
+      "name_en": "Beijing Mobile",
+      "asn": "AS9808",
+      "host": "ipv6.pek-9808.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "上海移动",
+      "name_en": "Shanghai Mobile",
+      "asn": "AS9808",
+      "host": "ipv6.sha-9808.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "广州移动",
+      "name_en": "Guangzhou Mobile",
+      "asn": "AS9808",
+      "host": "ipv6.can-9808.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "北京教育网",
+      "name_en": "Beijing Education",
+      "asn": "AS4538",
+      "host": "ipv6.pek-4538.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "上海教育网",
+      "name_en": "Shanghai Education",
+      "asn": "AS4538",
+      "host": "ipv6.sha-4538.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "杭州教育网",
+      "name_en": "Hangzhou Education",
+      "asn": "AS4538",
+      "host": "ipv6.hgh-4538.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "合肥科技网",
+      "name_en": "Hefei Science and Technology",
+      "asn": "AS7497",
+      "host": "ipv6.hfe-7497.endpoint.nxtrace.org"
+    }
+  ]
+}
