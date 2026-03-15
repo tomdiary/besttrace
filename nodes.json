@@ -153,6 +153,12 @@
       "host": "ipv6.hgh-4538.endpoint.nxtrace.org"
     },
     {
+      "name_cn": "北京科技网",
+      "name_en": "Beijing Science and Technology",
+      "asn": "AS7497",
+      "host": "ipv4.pek-7497.endpoint.nxtrace.org"
+    },
+    {
       "name_cn": "合肥科技网",
       "name_en": "Hefei Science and Technology",
       "asn": "AS7497",
