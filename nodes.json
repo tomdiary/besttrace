@@ -67,10 +67,10 @@
       "host": "ipv4.sha-4538.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "杭州教育网",
-      "name_en": "Hangzhou Education",
+      "name_cn": "广州教育网",
+      "name_en": "Guangzhou Education",
       "asn": "AS4538",
-      "host": "ipv4.hgh-4538.endpoint.nxtrace.org"
+      "host": "ipv4.can-4538.endpoint.nxtrace.org"
     },
     {
       "name_cn": "北京科技网",
@@ -153,22 +153,16 @@
       "host": "ipv6.sha-4538.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "杭州教育网",
-      "name_en": "Hangzhou Education",
+      "name_cn": "广州教育网",
+      "name_en": "Guangzhou Education",
       "asn": "AS4538",
-      "host": "ipv6.hgh-4538.endpoint.nxtrace.org"
+      "host": "ipv6.can-4538.endpoint.nxtrace.org"
     },
     {
       "name_cn": "北京科技网",
       "name_en": "Beijing Science and Technology",
       "asn": "AS7497",
       "host": "ipv6.pek-7497.endpoint.nxtrace.org"
-    },
-    {
-      "name_cn": "合肥科技网",
-      "name_en": "Hefei Science and Technology",
-      "asn": "AS7497",
-      "host": "ipv6.hfe-7497.endpoint.nxtrace.org"
     }
   ]
 }
