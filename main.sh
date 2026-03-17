@@ -38,6 +38,14 @@ NODES_URL="https://raw.githubusercontent.com/tomdiary/besttrace/main/nodes.json"
 NODES_CACHE_DIR="${XDG_CACHE_HOME:-/tmp/.besttrace}"
 NODES_FILE_LOCAL="${NODES_CACHE_DIR}/nodes.json"
 
+# 用户中断（Ctrl+C / kill）时退出
+on_interrupt() {
+  echo "" >&2
+  [ "$TRACE_LANG" = "en" ] && echo "[Info] Interrupted." >&2 || echo "[Info] 已中断" >&2
+  exit 130
+}
+trap on_interrupt INT TERM
+
 # 检查并安装 nexttrace
 check_nexttrace() {
   if command -v nexttrace &>/dev/null; then
@@ -193,7 +201,7 @@ main() {
     asn="${parts[1]}"
     host="${parts[2]}"
     echo "========================================================================="
-    echo -e "${NODE_TITLE} $name（$asn） ${FONT_SUFFIX}"
+    echo -e "${FONT_YELLOW}$name${FONT_SUFFIX}"
     nexttrace $NT_IP_FLAG -g "$TRACE_LANG" -M "$host"
   done
   echo "========================================================================="
