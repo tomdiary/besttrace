@@ -1,166 +1,166 @@
 {
   "nodes_v4": [
     {
-      "name_cn": "北京电信",
-      "name_en": "Beijing Telecom",
+      "name_cn": "『北京 电信 163 AS4134 』",
+      "name_en": "『Beijing Telecom 163 AS4134 』",
       "asn": "AS4134",
       "host": "ipv4.pek-4134.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "上海电信",
-      "name_en": "Shanghai Telecom",
+      "name_cn": "『上海 电信 163 AS4134 』",
+      "name_en": "『Shanghai Telecom 163 AS4134 』",
       "asn": "AS4134",
       "host": "ipv4.sha-4134.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "广州电信",
-      "name_en": "Guangzhou Telecom",
+      "name_cn": "『广州 电信 163 AS4134 』",
+      "name_en": "『Guangzhou Telecom 163 AS4134 』",
       "asn": "AS4134",
       "host": "ipv4.can-4134.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "北京联通",
-      "name_en": "Beijing Unicom",
+      "name_cn": "『北京 联通 169 AS4837 』",
+      "name_en": "『Beijing Unicom 169 AS4837 』",
       "asn": "AS4837",
       "host": "ipv4.pek-4837.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "上海联通",
-      "name_en": "Shanghai Unicom",
+      "name_cn": "『上海 联通 169 AS4837 』",
+      "name_en": "『Shanghai Unicom 169 AS4837 』",
       "asn": "AS4837",
       "host": "ipv4.sha-4837.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "广州联通",
-      "name_en": "Guangzhou Unicom",
+      "name_cn": "『广州 联通 169 AS4837 』",
+      "name_en": "『Guangzhou Unicom 169 AS4837 』",
       "asn": "AS4837",
       "host": "ipv4.can-4837.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "北京移动",
-      "name_en": "Beijing Mobile",
+      "name_cn": "『北京 移动 CMNET AS9808 』",
+      "name_en": "『Beijing Mobile CMNET AS9808 』",
       "asn": "AS9808",
       "host": "ipv4.pek-9808.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "上海移动",
-      "name_en": "Shanghai Mobile",
+      "name_cn": "『上海 移动 CMNET AS9808 』",
+      "name_en": "『Shanghai Mobile CMNET AS9808 』",
       "asn": "AS9808",
       "host": "ipv4.sha-9808.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "广州移动",
-      "name_en": "Guangzhou Mobile",
+      "name_cn": "『广州 移动 CMNET AS9808 』",
+      "name_en": "『Guangzhou Mobile CMNET AS9808 』",
       "asn": "AS9808",
       "host": "ipv4.can-9808.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "北京教育网",
-      "name_en": "Beijing Education",
+      "name_cn": "『北京 教育网 CERNET AS4538 』",
+      "name_en": "『Beijing Education CERNET AS4538 』",
       "asn": "AS4538",
       "host": "ipv4.pek-4538.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "上海教育网",
-      "name_en": "Shanghai Education",
+      "name_cn": "『上海 教育网 CERNET AS4538 』",
+      "name_en": "『Shanghai Education CERNET AS4538 』",
       "asn": "AS4538",
       "host": "ipv4.sha-4538.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "广州教育网",
-      "name_en": "Guangzhou Education",
+      "name_cn": "『广州 教育网 CERNET AS4538 』",
+      "name_en": "『Guangzhou Education CERNET AS4538 』",
       "asn": "AS4538",
       "host": "ipv4.can-4538.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "北京科技网",
-      "name_en": "Beijing Science and Technology",
+      "name_cn": "『北京 科技网 CSTNET AS7497 』",
+      "name_en": "『Beijing Science and Technology CSTNET AS7497 』",
       "asn": "AS7497",
       "host": "ipv4.pek-7497.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "合肥科技网",
-      "name_en": "Hefei Science and Technology",
+      "name_cn": "『合肥 科技网 CSTNET AS7497 』",
+      "name_en": "『Hefei Science and Technology CSTNET AS7497 』",
       "asn": "AS7497",
       "host": "ipv4.hfe-7497.endpoint.nxtrace.org"
     }
   ],
   "nodes_v6": [
     {
-      "name_cn": "北京电信",
-      "name_en": "Beijing Telecom",
+      "name_cn": "『北京 电信 163 AS4134 』",
+      "name_en": "『Beijing Telecom 163 AS4134 』",
       "asn": "AS4134",
       "host": "ipv6.pek-4134.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "上海电信",
-      "name_en": "Shanghai Telecom",
+      "name_cn": "『上海 电信 163 AS4134 』",
+      "name_en": "『Shanghai Telecom 163 AS4134 』",
       "asn": "AS4134",
       "host": "ipv6.sha-4134.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "广州电信",
-      "name_en": "Guangzhou Telecom",
+      "name_cn": "『广州 电信 163 AS4134 』",
+      "name_en": "『Guangzhou Telecom 163 AS4134 』",
       "asn": "AS4134",
       "host": "ipv6.can-4134.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "北京联通",
-      "name_en": "Beijing Unicom",
+      "name_cn": "『北京 联通 169 AS4837 』",
+      "name_en": "『Beijing Unicom 169 AS4837 』",
       "asn": "AS4837",
       "host": "ipv6.pek-4837.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "上海联通",
-      "name_en": "Shanghai Unicom",
+      "name_cn": "『上海 联通 169 AS4837 』",
+      "name_en": "『Shanghai Unicom 169 AS4837 』",
       "asn": "AS4837",
       "host": "ipv6.sha-4837.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "广州联通",
-      "name_en": "Guangzhou Unicom",
+      "name_cn": "『广州 联通 169 AS4837 』",
+      "name_en": "『Guangzhou Unicom 169 AS4837 』",
       "asn": "AS4837",
       "host": "ipv6.can-4837.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "北京移动",
-      "name_en": "Beijing Mobile",
+      "name_cn": "『北京 移动 CMNET AS9808 』",
+      "name_en": "『Beijing Mobile CMNET AS9808 』",
       "asn": "AS9808",
       "host": "ipv6.pek-9808.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "上海移动",
-      "name_en": "Shanghai Mobile",
+      "name_cn": "『上海 移动 CMNET AS9808 』",
+      "name_en": "『Shanghai Mobile CMNET AS9808 』",
       "asn": "AS9808",
       "host": "ipv6.sha-9808.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "广州移动",
-      "name_en": "Guangzhou Mobile",
+      "name_cn": "『广州 移动 CMNET AS9808 』",
+      "name_en": "『Guangzhou Mobile CMNET AS9808 』",
       "asn": "AS9808",
       "host": "ipv6.can-9808.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "北京教育网",
-      "name_en": "Beijing Education",
+      "name_cn": "『北京 教育网 CERNET AS4538 』",
+      "name_en": "『Beijing Education CERNET AS4538 』",
       "asn": "AS4538",
       "host": "ipv6.pek-4538.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "上海教育网",
-      "name_en": "Shanghai Education",
+      "name_cn": "『上海 教育网 CERNET AS4538 』",
+      "name_en": "『Shanghai Education CERNET AS4538 』",
       "asn": "AS4538",
       "host": "ipv6.sha-4538.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "广州教育网",
-      "name_en": "Guangzhou Education",
+      "name_cn": "『广州 教育网 CERNET AS4538 』",
+      "name_en": "『Guangzhou Education CERNET AS4538 』",
       "asn": "AS4538",
       "host": "ipv6.can-4538.endpoint.nxtrace.org"
     },
     {
-      "name_cn": "北京科技网",
-      "name_en": "Beijing Science and Technology",
+      "name_cn": "『北京 科技网 CSTNET AS7497 』",
+      "name_en": "『Beijing Science and Technology CSTNET AS7497 』",
       "asn": "AS7497",
       "host": "ipv6.pek-7497.endpoint.nxtrace.org"
     }

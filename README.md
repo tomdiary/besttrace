@@ -51,3 +51,4 @@ bash <(curl -Ls "https://raw.githubusercontent.com/tomdiary/besttrace/main/main.
 
 - 首次运行可能会安装 `nexttrace`，请确保网络可访问 `https://nxtrace.org`。
 - 部分节点可能因网络策略、ICMP 限制或路由波动出现超时（`*`），属正常现象。
+- 节点来源于: https://github.com/nxtrace/NTrace-dev/blob/main/fast_trace/basic.go
