@@ -53,7 +53,37 @@
       "name_en": "『Guangdong Telecom CMNET AS9808 』",
       "asn": "AS9808",
       "host": "gd-cm-v4.ip.zstaticcdn.com:80"
-    }
+    },
+    {
+      "name_cn": "『北京 教育网 CERNET AS4538 』",
+      "name_en": "『Beijing Education CERNET AS4538 』",
+      "asn": "AS4538",
+      "host": "ipv4.pek-4538.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "『上海 教育网 CERNET AS4538 』",
+      "name_en": "『Shanghai Education CERNET AS4538 』",
+      "asn": "AS4538",
+      "host": "ipv4.sha-4538.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "『广州 教育网 CERNET AS4538 』",
+      "name_en": "『Guangzhou Education CERNET AS4538 』",
+      "asn": "AS4538",
+      "host": "ipv4.can-4538.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "『北京 科技网 CSTNET AS7497 』",
+      "name_en": "『Beijing Science and Technology CSTNET AS7497 』",
+      "asn": "AS7497",
+      "host": "ipv4.pek-7497.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "『合肥 科技网 CSTNET AS7497 』",
+      "name_en": "『Hefei Science and Technology CSTNET AS7497 』",
+      "asn": "AS7497",
+      "host": "ipv4.hfe-7497.endpoint.nxtrace.org"
+    },
   ],
   "nodes_v6": [
     {
@@ -109,6 +139,30 @@
       "name_en": "『Guangdong Telecom CMNET AS9808 』",
       "asn": "AS9808",
       "host": "gd-cm-v6.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『北京 教育网 CERNET AS4538 』",
+      "name_en": "『Beijing Education CERNET AS4538 』",
+      "asn": "AS4538",
+      "host": "ipv6.pek-4538.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "『上海 教育网 CERNET AS4538 』",
+      "name_en": "『Shanghai Education CERNET AS4538 』",
+      "asn": "AS4538",
+      "host": "ipv6.sha-4538.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "『广州 教育网 CERNET AS4538 』",
+      "name_en": "『Guangzhou Education CERNET AS4538 』",
+      "asn": "AS4538",
+      "host": "ipv6.can-4538.endpoint.nxtrace.org"
+    },
+    {
+      "name_cn": "『北京 科技网 CSTNET AS7497 』",
+      "name_en": "『Beijing Science and Technology CSTNET AS7497 』",
+      "asn": "AS7497",
+      "host": "ipv6.pek-7497.endpoint.nxtrace.org"
     }
   ]
 }
