@@ -34,9 +34,11 @@ set -e
 TRACE_IPVER=4
 # 回程语言：cn-中文，en-英文，默认中文
 TRACE_LANG=cn
-NODES_URL="https://raw.githubusercontent.com/tomdiary/besttrace/main/nodes.json"
+# 节点数据源：nt=nxtrace(raw GitHub)，zc=zstaticcdn
+NODES_SOURCE=nt
 NODES_CACHE_DIR="${XDG_CACHE_HOME:-/tmp/.besttrace}"
-NODES_FILE_LOCAL="${NODES_CACHE_DIR}/nodes.json"
+NODES_URL=""
+NODES_FILE_LOCAL=""
 
 # 用户中断（Ctrl+C / kill）时退出
 on_interrupt() {
@@ -120,12 +122,47 @@ print_center() {
 
 # 打印帮助信息
 usage() {
-  echo "Usage: $0 [-4] [-6] [-l cn|en]"
+  echo "Usage: $0 [-4] [-6] [-i zc|nt] [-l cn|en]"
   echo "  -4          IPv4 only (default)"
   echo "  -6          IPv6 only"
+  echo "  -i zc|nt    Nodes: zc=zstaticcdn, nt=nxtrace (default: nt)"
   echo "  -l cn|en    Language: cn=中文, en=English (default: cn)"
   echo ""
   echo "Example: $0 -6 -l en"
+  echo "Example: $0 -i zc -4"
+}
+
+# 若目标为 host:port 或 [ipv6]:port，则拆出主机与端口（供 --tcp --port）
+split_host_port() {
+  local raw="$1"
+  if [[ "$raw" =~ ^\[(.+)\]:([0-9]+)$ ]]; then
+    printf '%s\n' "${BASH_REMATCH[1]}"
+    printf '%s\n' "${BASH_REMATCH[2]}"
+    return 0
+  fi
+  local colons="${raw//[^:]/}"
+  if [ "${#colons}" -eq 1 ] && [[ "$raw" =~ ^(.+):([0-9]+)$ ]]; then
+    printf '%s\n' "${BASH_REMATCH[1]}"
+    printf '%s\n' "${BASH_REMATCH[2]}"
+    return 0
+  fi
+  printf '%s\n' "$raw"
+  printf '\n'
+  return 1
+}
+
+apply_nodes_source() {
+  case "$NODES_SOURCE" in
+    zc)
+      NODES_URL="https://raw.githubusercontent.com/tomdiary/besttrace/main/zstaticcdn_nodes.json"
+      NODES_FILE_LOCAL="${NODES_CACHE_DIR}/nodes-zc.json"
+      ;;
+    nt | *)
+      NODES_SOURCE=nt
+      NODES_URL="https://raw.githubusercontent.com/tomdiary/besttrace/main/nxtrace_nodes.json"
+      NODES_FILE_LOCAL="${NODES_CACHE_DIR}/nodes-nt.json"
+      ;;
+  esac
 }
 
 load_nodes_from_json() {
@@ -165,6 +202,8 @@ load_nodes_from_json() {
 }
 
 main() {
+  apply_nodes_source
+
   if [ "$TRACE_IPVER" = "6" ]; then
     NT_IP_FLAG="--ipv6"
   else
@@ -202,15 +241,29 @@ main() {
     host="${parts[2]}"
     echo "========================================================================="
     echo -e "${FONT_YELLOW}$name${FONT_SUFFIX}"
-    nexttrace $NT_IP_FLAG -g "$TRACE_LANG" -M "$host"
+
+    mapfile -t _hp < <(split_host_port "$host")
+    _h="${_hp[0]}"
+    _p="${_hp[1]:-}"
+    if [ -n "$_p" ]; then
+      nexttrace $NT_IP_FLAG -g "$TRACE_LANG" -M --tcp --port "$_p" "$_h"
+    else
+      nexttrace $NT_IP_FLAG -g "$TRACE_LANG" -M "$host"
+    fi
   done
   echo "========================================================================="
 }
 
-while getopts "46hl:" opt; do
+while getopts "46hi:l:" opt; do
   case $opt in
     4) TRACE_IPVER=4 ;;
     6) TRACE_IPVER=6 ;;
+    i)
+      case "${OPTARG}" in
+        zc | nt) NODES_SOURCE="${OPTARG}" ;;
+        *) echo "Invalid -i option: ${OPTARG}. Use zc or nt."; usage; exit 1 ;;
+      esac
+      ;;
     l)
       case "${OPTARG}" in
         cn|en) TRACE_LANG="${OPTARG}" ;;
