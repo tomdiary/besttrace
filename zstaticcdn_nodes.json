@@ -1,0 +1,114 @@
+{
+  "nodes_v4": [
+    {
+      "name_cn": "『北京 电信 163 AS4134 』",
+      "name_en": "『Beijing Telecom 163 AS4134 』",
+      "asn": "AS4134",
+      "host": "bj-ct-v4.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『上海 电信 163 AS4134 』",
+      "name_en": "『Shanghai Telecom 163 AS4134 』",
+      "asn": "AS4134",
+      "host": "sh-ct-v4.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『广东 电信 163 AS4134 』",
+      "name_en": "『Guangdong Telecom 163 AS4134 』",
+      "asn": "AS4134",
+      "host": "gd-ct-v4.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『北京 联通 169 AS4837 』",
+      "name_en": "『Beijing Telecom 169 AS4837 』",
+      "asn": "AS4837",
+      "host": "bj-cu-v4.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『上海 联通 169 AS4837 』",
+      "name_en": "『Shanghai Telecom 169 AS4837 』",
+      "asn": "AS4837",
+      "host": "sh-cu-v4.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『广东 联通 169 AS4837 』",
+      "name_en": "『Guangdong Telecom 169 AS4837 』",
+      "asn": "AS4837",
+      "host": "gd-cu-v4.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『北京 移动 CMNET AS9808 』",
+      "name_en": "『Beijing Telecom CMNET AS9808 』",
+      "asn": "AS9808",
+      "host": "bj-cm-v4.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『上海 移动 CMNET AS9808 』",
+      "name_en": "『Shanghai Telecom CMNET AS9808 』",
+      "asn": "AS9808",
+      "host": "sh-cm-v4.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『广东 移动 CMNET AS9808 』",
+      "name_en": "『Guangdong Telecom CMNET AS9808 』",
+      "asn": "AS9808",
+      "host": "gd-cm-v4.ip.zstaticcdn.com:80"
+    }
+  ],
+  "nodes_v6": [
+    {
+      "name_cn": "『北京 电信 163 AS4134 』",
+      "name_en": "『Beijing Telecom 163 AS4134 』",
+      "asn": "AS4134",
+      "host": "bj-ct-v6.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『上海 电信 163 AS4134 』",
+      "name_en": "『Shanghai Telecom 163 AS4134 』",
+      "asn": "AS4134",
+      "host": "sh-ct-v6.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『广东 电信 163 AS4134 』",
+      "name_en": "『Guangdong Telecom 163 AS4134 』",
+      "asn": "AS4134",
+      "host": "gd-ct-v6.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『北京 联通 169 AS4837 』",
+      "name_en": "『Beijing Telecom 169 AS4837 』",
+      "asn": "AS4837",
+      "host": "bj-cu-v6.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『上海 联通 169 AS4837 』",
+      "name_en": "『Shanghai Telecom 169 AS4837 』",
+      "asn": "AS4837",
+      "host": "sh-cu-v6.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『广东 联通 169 AS4837 』",
+      "name_en": "『Guangdong Telecom 169 AS4837 』",
+      "asn": "AS4837",
+      "host": "gd-cu-v6.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『北京 移动 CMNET AS9808 』",
+      "name_en": "『Beijing Telecom CMNET AS9808 』",
+      "asn": "AS9808",
+      "host": "bj-cm-v6.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『上海 移动 CMNET AS9808 』",
+      "name_en": "『Shanghai Telecom CMNET AS9808 』",
+      "asn": "AS9808",
+      "host": "sh-cm-v6.ip.zstaticcdn.com:80"
+    },
+    {
+      "name_cn": "『广东 移动 CMNET AS9808 』",
+      "name_en": "『Guangdong Telecom CMNET AS9808 』",
+      "asn": "AS9808",
+      "host": "gd-cm-v6.ip.zstaticcdn.com:80"
+    }
+  ]
+}
