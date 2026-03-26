@@ -167,11 +167,19 @@ apply_nodes_source() {
 
 load_nodes_from_json() {
   local json_path="$NODES_FILE_LOCAL"
+  local current_source="$NODES_SOURCE"
   mkdir -p "$NODES_CACHE_DIR"
   if command -v curl &>/dev/null; then
     local tmp_file="${NODES_FILE_LOCAL}.tmp"
     if curl -fsSL "$NODES_URL" -o "$tmp_file"; then
-      mv "$tmp_file" "$NODES_FILE_LOCAL"
+      if command -v jq &>/dev/null && jq -e . "$tmp_file" >/dev/null 2>&1; then
+        mv "$tmp_file" "$NODES_FILE_LOCAL"
+      else
+        rm -f "$tmp_file"
+        [ "$TRACE_LANG" = "en" ] \
+          && echo "[Warning] Remote nodes JSON is invalid, keep local cache." >&2 \
+          || echo "[Warning] 远程节点 JSON 无效，保留本地缓存。" >&2
+      fi
     else
       rm -f "$tmp_file"
     fi
@@ -183,6 +191,30 @@ load_nodes_from_json() {
   fi
 
   install_jq
+
+  if ! jq -e . "$json_path" >/dev/null 2>&1; then
+    if [ "$current_source" = "zc" ]; then
+      [ "$TRACE_LANG" = "en" ] \
+        && echo "[Warning] zstaticcdn nodes JSON invalid, fallback to nxtrace nodes." >&2 \
+        || echo "[Warning] zstaticcdn 节点 JSON 无效，回退到 nxtrace 节点。" >&2
+      NODES_SOURCE="nt"
+      apply_nodes_source
+      json_path="$NODES_FILE_LOCAL"
+      if command -v curl &>/dev/null; then
+        local tmp_file_nt="${NODES_FILE_LOCAL}.tmp"
+        if curl -fsSL "$NODES_URL" -o "$tmp_file_nt" && jq -e . "$tmp_file_nt" >/dev/null 2>&1; then
+          mv "$tmp_file_nt" "$NODES_FILE_LOCAL"
+        else
+          rm -f "$tmp_file_nt"
+        fi
+      fi
+    fi
+  fi
+
+  if ! jq -e . "$json_path" >/dev/null 2>&1; then
+    echo "[Error] nodes json parse failed: $json_path" >&2
+    exit 1
+  fi
 
   local key name_key
   if [ "$TRACE_IPVER" = "6" ]; then
