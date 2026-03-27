@@ -171,17 +171,34 @@ load_nodes_from_json() {
   mkdir -p "$NODES_CACHE_DIR"
   if command -v curl &>/dev/null; then
     local tmp_file="${NODES_FILE_LOCAL}.tmp"
-    if curl -fsSL "$NODES_URL" -o "$tmp_file"; then
-      if command -v jq &>/dev/null && jq -e . "$tmp_file" >/dev/null 2>&1; then
-        mv "$tmp_file" "$NODES_FILE_LOCAL"
-      else
-        rm -f "$tmp_file"
-        [ "$TRACE_LANG" = "en" ] \
-          && echo "[Warning] Remote nodes JSON is invalid, keep local cache." >&2 \
-          || echo "[Warning] 远程节点 JSON 无效，保留本地缓存。" >&2
-      fi
+    local fetched=0
+    local urls=()
+    if [ "$current_source" = "zc" ]; then
+      urls=(
+        "https://raw.githubusercontent.com/tomdiary/besttrace/main/zstaticcdn_nodes.json"
+        "https://cdn.jsdelivr.net/gh/tomdiary/besttrace@main/zstaticcdn_nodes.json"
+      )
     else
+      urls=(
+        "https://raw.githubusercontent.com/tomdiary/besttrace/main/nxtrace_nodes.json"
+        "https://cdn.jsdelivr.net/gh/tomdiary/besttrace@main/nxtrace_nodes.json"
+        "https://raw.githubusercontent.com/tomdiary/besttrace/main/nodes.json"
+      )
+    fi
+    for u in "${urls[@]}"; do
+      if curl -fsSL "$u" -o "$tmp_file"; then
+        if command -v jq &>/dev/null && jq -e . "$tmp_file" >/dev/null 2>&1; then
+          mv "$tmp_file" "$NODES_FILE_LOCAL"
+          fetched=1
+          break
+        fi
+      fi
       rm -f "$tmp_file"
+    done
+    if [ "$fetched" -eq 0 ]; then
+      [ "$TRACE_LANG" = "en" ] \
+        && echo "[Warning] Remote nodes JSON unavailable/invalid, keep local cache." >&2 \
+        || echo "[Warning] 远程节点 JSON 不可用或无效，保留本地缓存。" >&2
     fi
   fi
 
