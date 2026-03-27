@@ -169,6 +169,7 @@ load_nodes_from_json() {
   local json_path="$NODES_FILE_LOCAL"
   local current_source="$NODES_SOURCE"
   mkdir -p "$NODES_CACHE_DIR"
+  install_jq
   if command -v curl &>/dev/null; then
     local tmp_file="${NODES_FILE_LOCAL}.tmp"
     local fetched=0
@@ -187,7 +188,7 @@ load_nodes_from_json() {
     fi
     for u in "${urls[@]}"; do
       if curl -fsSL "$u" -o "$tmp_file"; then
-        if command -v jq &>/dev/null && jq -e . "$tmp_file" >/dev/null 2>&1; then
+        if jq -e . "$tmp_file" >/dev/null 2>&1; then
           mv "$tmp_file" "$NODES_FILE_LOCAL"
           fetched=1
           break
@@ -206,8 +207,6 @@ load_nodes_from_json() {
     echo "[Error] nodes file not found (remote/local): $NODES_URL / $NODES_FILE_LOCAL" >&2
     exit 1
   fi
-
-  install_jq
 
   if ! jq -e . "$json_path" >/dev/null 2>&1; then
     if [ "$current_source" = "zc" ]; then
